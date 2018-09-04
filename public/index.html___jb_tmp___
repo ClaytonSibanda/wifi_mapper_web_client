@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
+    <meta charset="UTF-8">
+    <title>Wifi_Mapper</title>
+    <style>
+        #map{
+            height:100vh;
+            width:100%;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+
+    const config = {
+        apiKey: "AIzaSyDFuGSxPHb7yApVqy3AWTZVJcYL48gQz7U",
+        authDomain: "capestone-a8a58.firebaseapp.com",
+        databaseURL: "https://capestone-a8a58.firebaseio.com",
+        projectId: "capestone-a8a58",
+        storageBucket: "capestone-a8a58.appspot.com",
+        messagingSenderId: "705085920910"
+    };
+    firebase.initializeApp(config);
+
+
+
+    areaCoordinates=[];
+    areaValues =[];
+
+    let areas = firebase.database().ref().child('areas');
+    let location1 = firebase.database().ref().child('location');
+    //areas.on('value',function(snap) {
+        //areaCoordinates.push(snap.val().coordinates);
+        //areaValues.push(snap.val().wifiStrength);
+
+ //   });
+
+    //console.log(areaCoordinates);
+    //location.on("value",snap=> console.log(snap.val()));
+
+
+    function initMap(){
+        let options={
+            zoom:18,
+            center:{lat:-33.9577,lng:18.4612},
+            mapTypeId: 'hybrid'
+
+        };
+
+        let map = new google.maps.Map(document.getElementById('map'),options);
+
+
+        //add marker
+        let marker = new google.maps.Marker({
+            position:{lat:-33.9577,lng:18.4612}
+        });
+
+        let triangleCoords = [
+            {lat: 25.774, lng: -80.190},
+            {lat: 18.466, lng: -66.118},
+            {lat: 32.321, lng: -64.757},
+            {lat: 25.774, lng: -80.190}
+        ];
+
+        // Construct the polygon.
+        let bermudaTriangle = new google.maps.Polygon({
+            paths: triangleCoords,
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35
+        });
+
+        bermudaTriangle.setMap(map);
+        marker.setMap(map);
+    }
+
+    function getColor(strength){
+        if(strength<=30){
+            return "red";
+        }
+        if(strength<=50){
+            return "orange";
+        }
+        if(strength<=60){
+            return "yellow";
+        }
+        if(strength<=80){
+            return "yellowgreen";
+        }
+        if(strength<=100){
+            return "green";
+        }
+    }
+
+
+</script>
+</body>
+</html>
