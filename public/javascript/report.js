@@ -37,17 +37,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
          */
         if(!isRendered) {
 
-       let  data=    {
-                label: [],
-                    backgroundColor: "",
-                borderColor: "",
-                data: [{
-                x: 258702,
-                y: 7.526,
-                r: 10
-            }]
-            };
-
             let objArray = Object.values(snap.val());
 
             let pData = objArray.map((value) => {
@@ -59,7 +48,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
             }).filter((element) => {
                 return element !== undefined;
             });
-console.log(pData);
+            document.getElementById('numLocations').innerHTML ="Number of collected points: "+objArray.length;
+
 drawBubbleChart(pData);
             isRendered = true;
         }
@@ -92,6 +82,7 @@ drawBubbleChart(pData);
             drawStrengthBarChart(barChartData);
             drawAreaChart(barChartData);
             drawNumLocationBarChart(barChartData1);
+            document.getElementById('numAreas').innerHTML ="Number of Segents: 25";
 
             isAreaRendered = true;
         }
@@ -101,14 +92,14 @@ drawBubbleChart(pData);
 
 function getRandomColor() {
 
-    return 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+    return 'rgb(' + (Math.floor(100+(Math.random() * 128))) + ',' + (Math.floor(70+(Math.random() *128))) + ',' + (Math.floor(70+(Math.random() * 128)))+ ')';
 }
 function getRandomColors(length){
 
     //randomise colors
     colors=[];
     for(let i =0;i<length;i++){
-        colors.push('rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')')
+        colors.push('rgb(' + (Math.floor(100+(Math.random() * 128))) + ',' + (Math.floor(70+(Math.random() *128))) + ',' + (Math.floor(70+(Math.random() * 128))) + ')')
     }
 
     return colors;
@@ -128,7 +119,7 @@ function drawStrengthBarChart(dataItems){
             datasets: [
                 {
                     label: "WifiStrength (%)",
-                    backgroundColor:getRandomColors(dataItems.data.length),// ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                    backgroundColor:getRandomColors(dataItems.data.length),
                     data:dataItems.data
                 }
             ]

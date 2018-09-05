@@ -14,9 +14,12 @@
         overflow: auto;
     }
     canvas {
-        background-color:rgb(245,245,245) ;
+        background-color:#D0D0D0;
         /*width: 100%;*/
         height: auto;
+    }
+    .box{
+        margin-bottom: 10px;
     }
 
 
@@ -25,7 +28,13 @@
 </head>
 <body>
 <div class="container">
-<h1 class=" jumbotron">BugBusters Wifi Mapper Report for ICTS at the University of Cape Town</h1>
+    <div class=" jumbotron">
+<h1 >BugBusters Wifi Mapper Report for ICTS at the University of Cape Town</h1>
+        <p id="numAreas"></p>
+        <p id="numLocations"></p>
+        <p id="maxSignal"></p>
+        <p id="recent"></p>
+</div>
 </div>
 <div class="container-fluid">
 
@@ -34,15 +43,15 @@
 
 
 
-<div class="col-sm-4">
+<div class="col-sm-12 box  col-xs-12 col-md-4">
     <canvas id="bar-chart" width="400" height="400"></canvas></div>
 
-<div class="col-sm-4">
+<div class="col-sm-12 box col-xs-12 col-md-4">
     <canvas id="doughnut-chart" width="400" height="400" ></canvas>
 </div>
 
 
-<div class="col-sm-4">
+<div class="col-md-4 box col-sm-12 col-xs-12">
     <canvas id="bar-chart1" width="400" height="400" ></canvas></div>
 </div>
     <div class="col-md-12">
