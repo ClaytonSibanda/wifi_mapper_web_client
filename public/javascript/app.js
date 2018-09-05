@@ -1,5 +1,5 @@
 //(function() {
-
+let isRendered=false;
     //Button for generating report
     function CenterControl(controlDiv, map) {
 
@@ -28,7 +28,7 @@
 
         // Setup the click event listeners: simply set the map to Chicago.
         controlUI.addEventListener('click', function() {
-            window.open("./report.html");
+            window.open("./views/report.html");
             // alert("Will generate report soon");
         });
 
@@ -37,6 +37,9 @@
 
 
     //FIREBASE CONFIG FILE
+
+function getConfig()
+{
     const config = {
         apiKey: "AIzaSyDFuGSxPHb7yApVqy3AWTZVJcYL48gQz7U",
         authDomain: "capestone-a8a58.firebaseapp.com",
@@ -45,7 +48,11 @@
         storageBucket: "capestone-a8a58.appspot.com",
         messagingSenderId: "705085920910"
     };
-    firebase.initializeApp(config);
+    return config;
+}
+
+
+firebase.initializeApp(getConfig());
 
 
 
@@ -57,7 +64,7 @@
 
     function initMap(){
         let options={
-            zoom:19,
+            zoom:18,
             center:{lat:-33.957567, lng:18.460152},
             mapTypeId: 'hybrid',
             maxZoom:20,
@@ -76,26 +83,43 @@
 
 
 
+
         let areas = firebase.database().ref('areas').orderByKey();
+        let polys ={};
 
         areas.on('value',function(snap) {
             // console.log(Object.values(snap.val())[0]["coordinates"]);
             let objArray = Object.values(snap.val());
-
+//console.log(objArray);
+            if(!isRendered){
             objArray.forEach(function (item) {
                 //  console.log(item["coordinates"]);
+
                 let new_obj= new google.maps.Polygon({
                     paths:parseLatLng(item["coordinates"]),
                     strokeColor:"black",
-                    strokeOpacity:0,
+                    strokeOpacity:0.5,
                     strokeWeight:2,
                     fillColor:getColor(Number(item["wifiStrength"])),
-                    fillOpacity:0.35
+                    fillOpacity:0.8
                 });
+                polys[item["id"]]=new_obj;
+
+
                 new_obj.setMap(map);
-            });
+
+            });}
+            isRendered=true;
         });
 
+console.log(polys);
+
+areas.on("child_changed",(snap)=>{
+    var changedPoly = snap.val();
+    console.log("The updated post title is " ,changedPoly);
+    let _id = changedPoly['id'];
+    polys[_id].setOptions({fillColor: getColor(Number(changedPoly['wifiStrength']))});
+});
 
         marker.setMap(map);
 
@@ -119,22 +143,21 @@
 
     function getColor(strength){
         if(strength<=30){
-            return "red";
+            return "rgba(255,0,0,0.5)";
         }
         if(strength<=50){
-            return "orange";
+            return "rgba(255,127,0,0.5)";
         }
         if(strength<=60){
-            return "#e4e32c";
+            return "rgba(255,255,0,0.5)";
         }
         if(strength<=80){
-            return "#9acd32";
+            return "rgba(127,255,0,0.5)";
         }
         if(strength<=100){
-            return "#2ada2e";
+            return "rgba(0,255,0,0.5)";
         }
     }
-
 
 
 
