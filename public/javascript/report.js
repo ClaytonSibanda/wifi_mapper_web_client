@@ -16,7 +16,7 @@ function getConfig()
 firebase.initializeApp(getConfig());
 
 //get firebase handle
-let ref =firebase.database().ref('location').orderByKey();
+let locations =firebase.database().ref('location').orderByKey();
 let areas =firebase.database().ref('areas').orderByKey();
 let isRendered =false;
 let isAreaRendered =false;
@@ -30,23 +30,37 @@ document.addEventListener("DOMContentLoaded", function(event) {
     /**
      * Gets location data from firebase database
      */
-    ref.on('value',(snap)=>{
+    locations.on('value',(snap)=>{
 
         /**
          * check if the chart has been rendered
          */
         if(!isRendered) {
+
+       let  data=    {
+                label: [],
+                    backgroundColor: "",
+                borderColor: "",
+                data: [{
+                x: 258702,
+                y: 7.526,
+                r: 10
+            }]
+            };
+
             let objArray = Object.values(snap.val());
 
             let pData = objArray.map((value) => {
-                if (value.time)
-                    return {"date": new Date(value.time), "value": value.strength};
+
+                    return {"label": ["randomLocation"], "backgroundColor": getRandomColor(),
+                        "borderColor":getRandomColor(),
+                        "data":[{'x':value.lat,
+                            'y':value.lon,'r':Math.abs(Math.log(value.strength))>100?0:Math.abs(Math.log(value.strength))}]};
             }).filter((element) => {
                 return element !== undefined;
             });
-            //console.log(pData);
-         //   drawLineChart(pData);
-            //drawStrengthBarChart();
+console.log(pData);
+drawBubbleChart(pData);
             isRendered = true;
         }
     });
@@ -73,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
         });
 
-             console.log(barChartData);
+             //console.log(barChartData);
             //   drawLineChart(pData);
             drawStrengthBarChart(barChartData);
             drawAreaChart(barChartData);
@@ -85,6 +99,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 });
 
+function getRandomColor() {
+
+    return 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+}
 function getRandomColors(length){
 
     //randomise colors
@@ -120,6 +138,20 @@ function drawStrengthBarChart(dataItems){
             title: {
                 display: true,
                 text: 'Average values of Wifi Strength per segmented area'
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Average Wifi Strength"
+                    }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: "WLAN ZONE"
+                    }
+                }]
             }
         }
     });
@@ -154,6 +186,20 @@ function drawNumLocationBarChart(dataItems){
             title: {
                 display: true,
                 text: 'Number of Locations from which data was collected from per segmented area'
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Number Of Locations"
+                    }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: "WLAN ZONE"
+                    }
+                }]
             }
         }
     });
@@ -189,6 +235,41 @@ function drawAreaChart(dataItems){
 
 
 
+}
+
+
+function drawBubbleChart(dataItems){
+
+
+    new Chart(document.getElementById("bubble-chart"), {
+        type: 'bubble',
+        data: {
+
+            datasets: dataItems
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Locations(Points on the map) and their respective strengths (log(radius)) used'
+            }, scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Longitude"
+                    }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Latitude"
+                    }
+                }]
+            }
+        }
+    });
 }
 
 

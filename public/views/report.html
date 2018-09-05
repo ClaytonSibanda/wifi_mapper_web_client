@@ -14,8 +14,8 @@
         overflow: auto;
     }
     canvas {
-        background-color: rgb(245,245,245);
-        width: 100%;
+        background-color:rgb(245,245,245) ;
+        /*width: 100%;*/
         height: auto;
     }
 
@@ -24,8 +24,11 @@
     <title>WiFi Mapper Report</title>
 </head>
 <body>
+<div class="container">
+<h1 class=" jumbotron">BugBusters Wifi Mapper Report for ICTS at the University of Cape Town</h1>
+</div>
 <div class="container-fluid">
-<h1>BugBusters Wifi Mapper Report for ICTS at the University of Cape Town</h1>
+
 
 <div class="row">
 
@@ -41,6 +44,13 @@
 
 <div class="col-sm-4">
     <canvas id="bar-chart1" width="400" height="400" ></canvas></div>
+</div>
+    <div class="col-md-12">
+       <br>
+        <br>
+    </div>
+<div class="col-sm-12">
+    <canvas id="bubble-chart" width="400" height="400"></canvas>
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>

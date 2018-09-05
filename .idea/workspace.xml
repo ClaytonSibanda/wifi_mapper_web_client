@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a7ed7bf-7912-4803-af17-788bf4c94729" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.firebase/hosting.cHVibGlj.cache" beforeDir="false" afterPath="$PROJECT_DIR$/.firebase/hosting.cHVibGlj.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/javascript/report.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascript/report.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/views/report.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/views/report.html" afterDir="false" />
@@ -45,16 +44,16 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="2815" />
-          <entry key="js" value="2973" />
-          <entry key="txt" value="155" />
+          <entry key="html" value="3121" />
+          <entry key="js" value="3960" />
+          <entry key="txt" value="248" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="2815" />
-          <entry key="JavaScript" value="2973" />
-          <entry key="PLAIN_TEXT" value="155" />
+          <entry key="HTML" value="3121" />
+          <entry key="JavaScript" value="3960" />
+          <entry key="PLAIN_TEXT" value="248" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
@@ -80,24 +79,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/views/report.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="374">
+              <caret line="49" column="12" selection-start-line="49" selection-start-column="12" selection-end-line="49" selection-end-column="12" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/javascript/report.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="156" column="96" selection-start-line="156" selection-start-column="96" selection-end-line="156" selection-end-column="96" />
+            <state relative-caret-position="204">
+              <caret line="255" column="94" selection-start-line="255" selection-start-column="94" selection-end-line="255" selection-end-column="94" />
             </state>
           </provider>
         </entry>
@@ -136,8 +131,8 @@
         <option value="$PROJECT_DIR$/public/index.html" />
         <option value="$PROJECT_DIR$/public/app.js" />
         <option value="$PROJECT_DIR$/public/javascript/app.js" />
-        <option value="$PROJECT_DIR$/public/javascript/report.js" />
         <option value="$PROJECT_DIR$/public/views/report.html" />
+        <option value="$PROJECT_DIR$/public/javascript/report.js" />
       </list>
     </option>
   </component>
@@ -238,7 +233,7 @@
       <workItem from="1536064525862" duration="5356000" />
       <workItem from="1536069970022" duration="856000" />
       <workItem from="1536071721263" duration="20308000" />
-      <workItem from="1536135232176" duration="33810000" />
+      <workItem from="1536135232176" duration="43324000" />
     </task>
     <task id="LOCAL-00001" summary="Added segements on the map from the db">
       <created>1536083026307</created>
@@ -261,11 +256,25 @@
       <option name="project" value="LOCAL" />
       <updated>1536155105382</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="changed from D3.js to Chart.js for the report">
+      <created>1536175930994</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1536175930994</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Added pie chart and bootstrap for styling">
+      <created>1536181602593</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1536181602593</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="68363000" />
+    <option name="totallyTimeSpent" value="77877000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -283,7 +292,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.05957447" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.08794326" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -300,7 +309,9 @@
     <MESSAGE value="Added segements on the map from the db" />
     <MESSAGE value="changed zoom level&#10;restricted zoom levels" />
     <MESSAGE value="Handled on child change and on value events" />
-    <option name="LAST_COMMIT_MESSAGE" value="Handled on child change and on value events" />
+    <MESSAGE value="changed from D3.js to Chart.js for the report" />
+    <MESSAGE value="Added pie chart and bootstrap for styling" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added pie chart and bootstrap for styling" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/firebase.json">
@@ -327,21 +338,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascript/report.js">
+    <entry file="file://$PROJECT_DIR$/public/views/report.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="156" column="96" selection-start-line="156" selection-start-column="96" selection-end-line="156" selection-end-column="96" />
+        <state relative-caret-position="374">
+          <caret line="49" column="12" selection-start-line="49" selection-start-column="12" selection-end-line="49" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/views/report.html">
+    <entry file="file://$PROJECT_DIR$/public/javascript/report.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="204">
+          <caret line="255" column="94" selection-start-line="255" selection-start-column="94" selection-end-line="255" selection-end-column="94" />
         </state>
       </provider>
     </entry>
