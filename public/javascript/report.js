@@ -12,72 +12,235 @@ function getConfig()
     return config;
 }
 
+//Initialise firebase
 firebase.initializeApp(getConfig());
 
-let ref =firebase.database().ref('areas').orderByKey();
-let pData;
+//get firebase handle
+let ref =firebase.database().ref('location').orderByKey();
+let areas =firebase.database().ref('areas').orderByKey();
+let isRendered =false;
+let isAreaRendered =false;
 
 
+/**
+ * Loading data from API when DOM Content has been loaded'.
+ */
+document.addEventListener("DOMContentLoaded", function(event) {
 
-ref.on('value',(snap)=>{
-    let objArray = Object.values(snap.val());
+    /**
+     * Gets location data from firebase database
+     */
+    ref.on('value',(snap)=>{
 
-    pData = objArray.map((value)=>{
+        /**
+         * check if the chart has been rendered
+         */
+        if(!isRendered) {
+            let objArray = Object.values(snap.val());
 
-        return {"label":value.name,"value":value.wifiStrength};
+            let pData = objArray.map((value) => {
+                if (value.time)
+                    return {"date": new Date(value.time), "value": value.strength};
+            }).filter((element) => {
+                return element !== undefined;
+            });
+            //console.log(pData);
+         //   drawLineChart(pData);
+            //drawStrengthBarChart();
+            isRendered = true;
+        }
     });
-    drawPieChart(pData);
-    });
 
-function drawPieChart(data) {
+    /**
+     * Gets area data from firebase database
+     */
+    areas.on('value',(snap)=>{
 
-    let w = 800,                        //width
-        h = 800,                            //height
-        r = 200,                            //radius
-        color = d3.scale.category20c();     //builtin range of colors
+        /**
+         * check if the chart has been rendered
+         */
+        if(!isAreaRendered) {
+            let objArray = Object.values(snap.val());
+            barChartData={labels:[],data:[]};
+            barChartData1={labels:[],data:[]};
 
+            objArray.forEach(function(value){
+                      barChartData.labels.push(value.name);
+                      barChartData.data.push(value.wifiStrength);
+                      barChartData1.labels.push(value.name);
+                      barChartData1.data.push(value.numLocation);
+                      console.log(value.numLocation);
 
-    data = data.filter((el)=>{return el.value>0});
-    let vis = d3.select("body")
-        .append("svg:svg")              //create the SVG element inside the <body>
-        .data([data])                   //associate our data with the document
-        .attr("width", w)           //set the width and height of our visualization (these will be attributes of the <svg> tag
-        .attr("height", h)
-        .append("svg:g")                //make a group to hold our pie chart
-        .attr("transform", "translate(" + r + "," + r + ")")    //move the center of the pie chart from 0, 0 to radius, radius
-
-    var arc = d3.svg.arc()              //this will create <path> elements for us using arc data
-        .outerRadius(r);
-
-    var pie = d3.layout.pie()           //this will create arc data for us given a list of values
-        .value(function (d) {
-            return d.value;
-        });    //we must tell it out to access the value of each element in our data array
-
-    var arcs = vis.selectAll("g.slice")     //this selects all <g> elements with class slice (there aren't any yet)
-        .data(pie)                          //associate the generated pie data (an array of arcs, each having startAngle, endAngle and value properties)
-        .enter()                            //this will create <g> elements for every "extra" data element that should be associated with a selection. The result is creating a <g> for every object in the data array
-        .append("svg:g")                //create a group to hold each slice (we will have a <path> and a <text> element associated with each slice)
-        .attr("class", "slice");    //allow us to style things in the slices (like text)
-
-    arcs.append("svg:path")
-        .attr("fill", function (d, i) {
-            return color(i);
-        }) //set the color for each slice to be chosen from the color function defined above
-        .attr("d", arc);                                    //this creates the actual SVG path using the associated data (pie) with the arc drawing function
-
-    arcs.append("svg:text")                                     //add a label to each slice
-        .attr("transform", function (d) {                    //set the label's origin to the center of the arc
-            //we have to make sure to set these before calling arc.centroid
-            d.innerRadius = 0;
-            d.outerRadius = r;
-            return "translate(" + arc.centroid(d) + ")";        //this gives us a pair of coordinates like [50, 50]
-        })
-        .attr("text-anchor", "middle")                          //center the text on it's origin
-        .text(function (d, i) {
-            return data[i].label;
         });
+
+            console.log(barChartData1);
+            //   drawLineChart(pData);
+            drawStrengthBarChart(barChartData);
+            drawNumLocationBarChart(barChartData1);
+            isAreaRendered = true;
+        }
+    });
+
+});
+
+function getRandomColors(length){
+
+    //randomise colors
+    colors=[];
+    for(let i =0;i<length;i++){
+        colors.push('rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')')
+    }
+
+    return colors;
+}
+
+/**
+ * draws a bar chart of wifiStength with names of the areas on the x-axis
+ * @param dataItems
+ */
+function drawStrengthBarChart(dataItems){
+// console.log(dataItems);
+
+    new Chart(document.getElementById("bar-chart"), {
+        type: 'bar',
+        data: {
+            labels: dataItems.labels,
+            datasets: [
+                {
+                    label: "WifiStrength (%)",
+                    backgroundColor:getRandomColors(dataItems.data.length),// ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                    data:dataItems.data
+                }
+            ]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: 'Average values of Wifi Strength per segmented area'
+            }
+        }
+    });
+
+
 }
 
 
-drawPieChart(pData);
+/**
+ * draws a bar chart of Number of Locations vs the names of the areas on the x-axis
+ * @param dataItems
+ */
+function drawNumLocationBarChart(dataItems){
+    // console.log(dataItems);
+//randomise colors
+    colors=[];
+    for(let i =0;i<dataItems.data.length;i++){
+        colors.push('rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')')
+    }
+
+    new Chart(document.getElementById("bar-chart1"), {
+        type: 'bar',
+        data: {
+            labels: dataItems.labels,
+            datasets: [
+                {
+                    label: "numberOfLocations",
+                    backgroundColor:getRandomColors(dataItems.data.length),
+                    data:dataItems.data
+                }
+            ]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: 'Number of Locations from which data was collected from per segmented area'
+            }
+        }
+    });
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// /**
+//  * Creates a chart using D3
+//  * @param {object} data Object containing historical data of location strength
+//  */
+// function drawLineChart(data) {
+//     var svgWidth = 600, svgHeight = 400;
+//     var margin = { top: 20, right: 5, bottom: 30, left: 700 };
+//     var width = svgWidth - margin.left - margin.right;
+//     var height = svgHeight - margin.top - margin.bottom;
+//
+//     var svg = d3.select('#svg1')
+//         .attr("width", svgWidth)
+//         .attr("height", svgHeight);
+//
+//     var g = svg.append("g")
+//         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+//
+//     var x = d3.scaleTime()
+//         .rangeRound([0, width]);
+//
+//     var y = d3.scaleLinear()
+//         .rangeRound([height, 0]);
+//
+//     var line = d3.line()
+//         .x(function(d) { return x(d.date)})
+//         .y(function(d) { return y(d.value)})
+//     x.domain(d3.extent(data, function(d) { return d.date }));
+//     y.domain(d3.extent(data, function(d) { return d.value }));
+//
+//     g.append("g")
+//         .attr("transform", "translate(0," + height + ")")
+//         .call(d3.axisBottom(x))
+//         .select(".domain")
+//         .remove();
+//
+//     g.append("g")
+//         .call(d3.axisLeft(y))
+//         .append("text")
+//         .attr("fill", "#000")
+//         .attr("transform", "rotate(-90)")
+//         .attr("y", 8)
+//         .attr("dy", "0.71em")
+//         .attr("text-anchor", "end")
+//         .text(" Strength (bps)");
+//
+//     g.append("path")
+//         .datum(data)
+//         .attr("fill", "none")
+//         .attr("stroke", "steelblue")
+//         .attr("stroke-linejoin", "round")
+//         .attr("stroke-linecap", "round")
+//         .attr("stroke-width", 1)
+//         .attr("d", line);
+// }
+
+
