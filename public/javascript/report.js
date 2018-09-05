@@ -69,14 +69,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
                       barChartData.data.push(value.wifiStrength);
                       barChartData1.labels.push(value.name);
                       barChartData1.data.push(value.numLocation);
-                      console.log(value.numLocation);
+                     // console.log(value.numLocation);
 
         });
 
-            console.log(barChartData1);
+             console.log(barChartData);
             //   drawLineChart(pData);
             drawStrengthBarChart(barChartData);
+            drawAreaChart(barChartData);
             drawNumLocationBarChart(barChartData1);
+
             isAreaRendered = true;
         }
     });
@@ -133,10 +135,7 @@ function drawStrengthBarChart(dataItems){
 function drawNumLocationBarChart(dataItems){
     // console.log(dataItems);
 //randomise colors
-    colors=[];
-    for(let i =0;i<dataItems.data.length;i++){
-        colors.push('rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')')
-    }
+
 
     new Chart(document.getElementById("bar-chart1"), {
         type: 'bar',
@@ -162,6 +161,35 @@ function drawNumLocationBarChart(dataItems){
 
 }
 
+/**
+ * Draws a donut pie chart to display when there are a few items on the list, supplements bar graph
+ * @param dataItems
+ */
+function drawAreaChart(dataItems){
+
+    new Chart(document.getElementById("doughnut-chart"), {
+        type: 'doughnut',
+        data: {
+            labels: dataItems.labels,
+            datasets: [
+                {
+                    label: "Signal Strength",
+                    backgroundColor: getRandomColors(dataItems.data.length),
+                    data: dataItems.data
+                }
+            ]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Pie chart representation of the average values of Wifi Strength per segmented area'
+            }
+        }
+    });
+
+
+
+}
 
 
 

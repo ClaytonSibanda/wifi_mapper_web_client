@@ -1,25 +1,48 @@
 <html>
 <head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+
+    body{
+        overflow: auto;
+    }
+    canvas {
+        background-color: rgb(245,245,245);
+        width: 100%;
+        height: auto;
+    }
+
+
+</style>
     <title>WiFi Mapper Report</title>
 </head>
 <body>
+<div class="container-fluid">
 <h1>BugBusters Wifi Mapper Report for ICTS at the University of Cape Town</h1>
 
-<!--<svg class="line-chart" id="svg1"></svg>-->
-<!--<svg class="line-chart" id="svg2"></svg>-->
-
-<div style="max-width:400px; max-height:200px">
-    <canvas id="bar-chart" width="400" height="300"></canvas></div>
-<br>
-<br>
-<br>
-<br>
-<br/>
-<div style="max-width:400px; max-height:200px">
-    <canvas id="bar-chart1" width="400" height="300"></canvas></div>
+<div class="row">
 
 
+
+<div class="col-sm-4">
+    <canvas id="bar-chart" width="400" height="400"></canvas></div>
+
+<div class="col-sm-4">
+    <canvas id="doughnut-chart" width="400" height="400" ></canvas>
+</div>
+
+
+<div class="col-sm-4">
+    <canvas id="bar-chart1" width="400" height="400" ></canvas></div>
+</div>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
 
