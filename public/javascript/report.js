@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     return {"label": ["randomLocation"], "backgroundColor": getRandomColor(),
                         "borderColor":getRandomColor(),
                         "data":[{'x':value.lat,
-                            'y':value.lon,'r':Math.abs(Math.log(value.strength))>100?0:Math.abs(Math.log(value.strength))}]};
+                            'y':value.lon,'r':20+Math.abs(Math.log(value.strength))>100?0:10+Math.abs(Math.log(value.strength))}]};
             }).filter((element) => {
                 return element !== undefined;
             });
@@ -265,7 +265,50 @@ function drawBubbleChart(dataItems){
 
 
 
+function generateReport(){
+    var doc = new jsPDF('l', 'pt', 'a4');
 
+    let canvas1 = document.getElementById('bar-chart');
+
+    let canvas2 = document.getElementById('bar-chart1');
+    let canvas3 = document.getElementById('doughnut-chart');
+
+    let canvas4= document.getElementById('bubble-chart');
+
+
+
+
+    // only jpeg is supported by jsPDF
+    let imgData1 = canvas1.toDataURL("image/jpeg", 1.0);
+    let imgData2 = canvas2.toDataURL("image/jpeg", 1.0);
+
+    let imgData3 = canvas3.toDataURL("image/jpeg", 1.0);
+    let imgData4 = canvas4.toDataURL("image/jpeg", 1.0);
+
+
+    doc.autoPrint();
+     doc.fromHTML($('body').get(0), 15, 15, {
+         'width': 170
+     });
+    doc.addPage();
+        doc.addImage(imgData1, 'JPEG', 0, 0);
+        doc.addPage();
+    doc.addImage(imgData2, 'JPEG', 0,0);
+    doc.addPage();
+    doc.addImage(imgData3, 'JPEG', 0,0);
+    doc.addPage();
+    doc.addImage(imgData4, 'JPEG', 0,0);
+    //pdf.save("download.pdf");
+
+
+   // doc.autoPrint();
+   //  doc.fromHTML($('body').get(0), 15, 15, {
+   //      'width': 170
+   //  });
+    let d= new Date();
+    let d1=d.getMilliseconds();
+    doc.save('report'+d1+'.pdf');
+}
 
 
 

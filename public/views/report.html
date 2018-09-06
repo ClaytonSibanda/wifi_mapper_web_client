@@ -8,7 +8,9 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<style>
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+
+    <style>
 
     body{
         overflow: auto;
@@ -33,7 +35,7 @@
         <p id="numAreas"></p>
         <p id="numLocations"></p>
         <p id="maxSignal"></p>
-        <p id="recent"></p>
+        <button class="btn btn-default" onclick="generateReport()">save as pdf</button>
 </div>
 </div>
 <div class="container-fluid">
